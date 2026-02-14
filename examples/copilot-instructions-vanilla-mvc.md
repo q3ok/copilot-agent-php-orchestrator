@@ -136,6 +136,49 @@
 
 ---
 
+## Environment Setup
+
+- **Local setup command**: `docker compose up -d`
+- **Install dependencies**: `composer install`
+- **Database setup**: Import `sql/schema.sql` via phpMyAdmin or CLI; apply migrations from `sql/migrations/` in order
+- **Environment file**: Copy `.env.example` to `.env` and fill in database credentials and S3 keys
+- **Required services**: MySQL 8
+
+---
+
+## Code Quality & Static Analysis (optional — remove if not applicable)
+
+- **Static analysis**: none
+- **Code style**: PSR-12 (manual adherence, no automated tool)
+- **Pre-commit hooks**: none
+- **CI checks**: none
+
+---
+
+## API (optional — remove if not applicable)
+
+- **API style**: none / server-rendered only
+
+---
+
+## Git Workflow (optional — remove if not applicable)
+
+- **Branch strategy**: GitHub Flow (main + feature branches)
+- **Branch naming**: `feature/short-description`
+- **Commit conventions**: Free-form descriptive messages
+- **PR process**: Manual review
+
+---
+
+## Key Modules / Domains (optional — remove if not applicable)
+
+- **Stores**: Store CRUD, settings, logo upload (`app/Controller/StoreController.php`, `app/Repository/StoreRepository.php`)
+- **Products**: Product catalog, categories, pricing, stock (`app/Controller/ProductController.php`, `app/Repository/ProductRepository.php`)
+- **Orders**: Order lifecycle, invoicing, PDF generation (`app/Controller/OrderController.php`, `app/Service/InvoiceService.php`)
+- **Reports**: Sales reports, inventory reports, CSV export (`app/Controller/ReportController.php`, `app/Service/ReportService.php`)
+
+---
+
 ## Additional Notes
 
 - Services are created through `Factory_Service` factory class

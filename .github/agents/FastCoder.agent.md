@@ -1,4 +1,4 @@
-```chatagent
+````chatagent
 ---
 name: fastcoder
 description: Executes simple, well-defined implementation tasks quickly with minimal overhead. Requires crystal-clear specs from Planner. For straightforward changes only (config updates, single-file edits, bug fixes under 5 minutes estimated work).
@@ -73,4 +73,4 @@ Read `.github/copilot-instructions.md` and apply ALL constraints defined there. 
 - If ambiguity or blocker found, report and escalate to Coder immediately.
 - Always hand off to Orchestrator when complete or escalating.
 
-```
+````

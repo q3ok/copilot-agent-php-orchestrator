@@ -20,6 +20,14 @@ Thank you for your interest in contributing! This guide explains how to particip
 - If your change affects an agent file, test it with GitHub Copilot Chat to verify behavior.
 - Update `README.md` if your change affects usage, setup, or agent roles.
 
+### PR Checklist
+
+- Agent frontmatter includes all required fields: `name`, `description`, `tools`, `model`, `target`.
+- Non-implementing agents do not include `edit` in `tools`.
+- Agent prompts do not reference non-existent tooling (for example: `askuser`).
+- `README.md` model defaults match `.github/agents/*.agent.md`.
+- CI workflow `Docs and Agents Validate` passes.
+
 ## Agent File Conventions
 
 All agent definition files live in `.github/agents/` and follow these rules:
@@ -40,6 +48,7 @@ name: lowercase-agent-name
 description: One-line description of the agent's role.
 tools: [list, of, tools]
 model: "model-name"
+target: vscode
 ---
 ```
 

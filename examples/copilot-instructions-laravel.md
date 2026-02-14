@@ -135,6 +135,54 @@
 
 ---
 
+## Environment Setup
+
+- **Local setup command**: `./vendor/bin/sail up -d` or `docker compose up -d`
+- **Install dependencies**: `composer install && npm install && npm run build`
+- **Database setup**: `php artisan migrate --seed`
+- **Environment file**: Copy `.env.example` to `.env` and run `php artisan key:generate`
+- **Required services**: MySQL 8, Redis
+
+---
+
+## Code Quality & Static Analysis (optional — remove if not applicable)
+
+- **Static analysis**: PHPStan level 6 (`vendor/bin/phpstan analyse`)
+- **Code style**: Laravel Pint (`vendor/bin/pint`)
+- **Pre-commit hooks**: none
+- **CI checks**: PHPStan + Pint + Pest in GitHub Actions
+
+---
+
+## API (optional — remove if not applicable)
+
+- **API style**: REST
+- **API prefix / versioning**: `/api/v1/*` (routes defined in `routes/api.php`)
+- **Response format**: Laravel API Resources (`App\Http\Resources\*`)
+- **Authentication**: Bearer token via Sanctum
+- **Rate limiting**: Laravel RateLimiter (60 requests/min)
+- **API documentation**: none
+
+---
+
+## Git Workflow (optional — remove if not applicable)
+
+- **Branch strategy**: GitHub Flow (main + feature branches)
+- **Branch naming**: `feature/short-description`, `fix/short-description`
+- **Commit conventions**: Conventional Commits (`feat:`, `fix:`, `chore:`)
+- **PR process**: Require 1 approval + passing CI
+
+---
+
+## Key Modules / Domains (optional — remove if not applicable)
+
+- **Users**: Registration, authentication, profile, team management (`app/Models/User.php`, `app/Http/Controllers/UserController.php`)
+- **Projects**: Project CRUD, team collaboration, settings (`app/Models/Project.php`, `app/Services/ProjectService.php`)
+- **Tasks**: Task lifecycle, assignments, comments, attachments (`app/Models/Task.php`, `app/Http/Controllers/TaskController.php`)
+- **Reports**: Analytics dashboards, CSV/PDF exports (`app/Services/ReportService.php`)
+
+---
+
 ## Additional Notes
 
 - Use `php artisan make:*` commands to generate boilerplate (controllers, models, migrations, etc.)

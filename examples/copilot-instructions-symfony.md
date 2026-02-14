@@ -135,6 +135,54 @@
 
 ---
 
+## Environment Setup
+
+- **Local setup command**: `docker compose up -d`
+- **Install dependencies**: `composer install && npm install && npm run build` (Webpack Encore)
+- **Database setup**: `php bin/console doctrine:migrations:migrate`
+- **Environment file**: Copy `.env` to `.env.local` and adjust database credentials
+- **Required services**: PostgreSQL 16, Redis, RabbitMQ
+
+---
+
+## Code Quality & Static Analysis (optional — remove if not applicable)
+
+- **Static analysis**: PHPStan level 8 (`vendor/bin/phpstan analyse`)
+- **Code style**: PHP-CS-Fixer (`vendor/bin/php-cs-fixer fix`)
+- **Pre-commit hooks**: GrumPHP (runs PHPStan + CS-Fixer + PHPUnit on commit)
+- **CI checks**: PHPStan + PHP-CS-Fixer + PHPUnit in GitHub Actions
+
+---
+
+## API (optional — remove if not applicable)
+
+- **API style**: REST (selected endpoints for mobile app integration)
+- **API prefix / versioning**: `/api/v1/*`
+- **Response format**: Symfony Serializer + DTOs (`App\Dto\Response\*`)
+- **Authentication**: JWT via lexik/jwt-authentication-bundle
+- **Rate limiting**: Symfony rate_limiter (60 requests/min per user)
+- **API documentation**: NelmioApiDocBundle (Swagger/OpenAPI at `/api/doc`)
+
+---
+
+## Git Workflow (optional — remove if not applicable)
+
+- **Branch strategy**: Git Flow (`main`, `develop`, `feature/*`, `hotfix/*`)
+- **Branch naming**: `feature/JIRA-123-short-description`
+- **Commit conventions**: Conventional Commits (`feat:`, `fix:`, `chore:`)
+- **PR process**: Require 1 approval + passing CI; squash merge
+
+---
+
+## Key Modules / Domains (optional — remove if not applicable)
+
+- **Content**: Content CRUD, versioning, publishing workflow (`src/Entity/Content.php`, `src/Controller/ContentController.php`)
+- **Workflow**: Approval workflows, state machine, notifications (`src/Workflow/`, `src/EventSubscriber/WorkflowSubscriber.php`)
+- **Users**: User management, roles, organizations (`src/Entity/User.php`, `src/Security/`)
+- **Media**: File uploads, image processing, gallery management (`src/Service/MediaService.php`)
+
+---
+
 ## Additional Notes
 
 - Use `php bin/console make:*` commands (MakerBundle) to generate boilerplate

@@ -136,6 +136,58 @@
 
 ---
 
+## Environment Setup
+
+- **Local setup command**: <!-- FILL IN: e.g., "docker compose up -d", "php artisan serve", "symfony server:start" -->
+- **Install dependencies**: <!-- FILL IN: e.g., "composer install", "composer install && npm install && npm run build" -->
+- **Database setup**: <!-- FILL IN: e.g., "php artisan migrate --seed", "php bin/console doctrine:migrations:migrate", "import sql/schema.sql" -->
+- **Environment file**: <!-- FILL IN: e.g., "Copy .env.example to .env and run php artisan key:generate", "Copy .env.dist to .env.local" -->
+- **Required services**: <!-- FILL IN: e.g., "MySQL, Redis", "PostgreSQL, RabbitMQ, Redis", "MySQL only" -->
+
+---
+
+## Code Quality & Static Analysis (optional — remove if not applicable)
+
+- **Static analysis**: <!-- FILL IN: e.g., "PHPStan level 8 (vendor/bin/phpstan analyse)", "Psalm", "none" -->
+- **Code style**: <!-- FILL IN: e.g., "Laravel Pint (vendor/bin/pint)", "PHP-CS-Fixer (vendor/bin/php-cs-fixer fix)", "PSR-12 manual", "none" -->
+- **Pre-commit hooks**: <!-- FILL IN: e.g., "Husky + lint-staged", "GrumPHP", "none" -->
+- **CI checks**: <!-- FILL IN: e.g., "PHPStan + Pint + PHPUnit in GitHub Actions", "PHP-CS-Fixer + PHPUnit in GitLab CI", "none" -->
+
+---
+
+## API (optional — remove if not applicable)
+
+- **API style**: <!-- FILL IN: e.g., "REST", "GraphQL (Lighthouse)", "JSON-RPC", "none / server-rendered only" -->
+- **API prefix / versioning**: <!-- FILL IN: e.g., "/api/v1/*", "/graphql", "no versioning" -->
+- **Response format**: <!-- FILL IN: e.g., "Laravel API Resources (App\Http\Resources\*)", "Symfony Serializer + DTO", "manual json_encode()", "Fractal transformers" -->
+- **Authentication**: <!-- FILL IN: e.g., "Bearer token via Sanctum", "JWT via lexik/jwt-authentication-bundle", "API key in header" -->
+- **Rate limiting**: <!-- FILL IN: e.g., "Laravel RateLimiter (60/min)", "Symfony rate_limiter", "none" -->
+- **API documentation**: <!-- FILL IN: e.g., "Swagger / OpenAPI via L5-Swagger", "API Platform", "Scribe", "none" -->
+
+---
+
+## Git Workflow (optional — remove if not applicable)
+
+- **Branch strategy**: <!-- FILL IN: e.g., "Git Flow (main, develop, feature/*, hotfix/*)", "GitHub Flow (main + feature branches)", "trunk-based development" -->
+- **Branch naming**: <!-- FILL IN: e.g., "feature/JIRA-123-short-description", "feature/short-description", "no convention" -->
+- **Commit conventions**: <!-- FILL IN: e.g., "Conventional Commits (feat:, fix:, chore:)", "Free-form descriptive messages", "Jira ticket prefix" -->
+- **PR process**: <!-- FILL IN: e.g., "Require 1 approval + passing CI", "Self-merge after CI passes", "manual review" -->
+
+---
+
+## Key Modules / Domains (optional — remove if not applicable)
+
+<!-- FILL IN: List the main business modules/domains of your application so agents understand the project scope and can navigate the codebase more effectively. Example:
+
+- **Users**: Registration, authentication, profile management (`app/Models/User.php`, `app/Http/Controllers/UserController.php`)
+- **Products**: Product catalog, categories, pricing (`app/Models/Product.php`, `app/Services/ProductService.php`)
+- **Orders**: Order lifecycle, checkout, payments (`app/Models/Order.php`, `app/Services/OrderService.php`)
+- **Reports**: Analytics dashboards, CSV exports (`app/Services/ReportService.php`)
+
+Remove this section if not needed. -->
+
+---
+
 ## Additional Notes
 
 <!-- FILL IN: Any other project-specific conventions, patterns, or rules that agents should know about. Remove this section if not needed. -->

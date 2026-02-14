@@ -1,8 +1,8 @@
-```chatagent
+````chatagent
 ---
 name: orchestrator
 description: Breaks down complex requests, delegates to specialist subagents (Planner/Designer/Coder/Reviewer/Tester), coordinates results, and reports back. Never implements directly.
-tools: [vscode, execute, read, agent, edit, search, web, todo]
+tools: [vscode, execute, read, agent, search, web, todo]
 model: "Claude Opus 4.6"
 target: vscode
 ---
@@ -72,7 +72,7 @@ Use **Coder** when:
 You are the Planner agent. Create a plan (no code) for: <REQUEST>.
 Constraints: follow project conventions in .github/copilot-instructions.md; security-first (CSRF, XSS, SQL injection, ACL, tenant scoping if applicable); match existing architectural patterns.
 Output format: 1 paragraph summary; ordered implementation steps; security considerations; edge cases; open questions.
-What do you think? (use askuser tool if response is needed if not, continue with implementation)
+What do you think?
 """
 
 ### Prompt template — Designer
@@ -80,7 +80,7 @@ What do you think? (use askuser tool if response is needed if not, continue with
 You are the Designer agent. Produce a UX/UI spec for: <REQUEST>.
 Include: layout decisions, color/contrast/accessibility notes, interaction states, and any assets/tokens needed.
 Stay within the project's design system and existing patterns as defined in .github/copilot-instructions.md.
-What do you think? (use askuser tool if response is needed if not, continue with implementation)
+What do you think?
 """
 
 ### Prompt template — Coder
@@ -88,7 +88,7 @@ What do you think? (use askuser tool if response is needed if not, continue with
 You are the Coder agent. Implement: <REQUEST>.
 Follow: repo conventions and architecture from .github/copilot-instructions.md; security-first; minimal changes; add/adjust tests if appropriate.
 Report: files changed, test results, and any risks.
-What do you think? (use askuser tool if response is needed if not, continue with implementation)
+What do you think?
 """
 
 ### Prompt template — FastCoder
@@ -98,6 +98,7 @@ Spec from Planner: <CLEAR_SPEC_DETAILS>.
 Constraints: repo conventions per .github/copilot-instructions.md; no ambiguity allowed — escalate to Coder if unclear.
 Report: files changed, what changed, validation/test results.
 If unsure, escalate to Coder immediately rather than guessing.
+What do you think?
 """
 
 ### Prompt template — Tester
@@ -173,4 +174,4 @@ GOOD orchestration:
 5) Reconcile: confirm no conflicts between changes.
 6) Report results from both agents + review verdict.
 
-```
+````

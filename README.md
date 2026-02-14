@@ -7,10 +7,6 @@
 
 ---
 
-**MAKE PHP GREAT AGAIN**
-
----
-
 ## What is this?
 
 This repository provides a set of **GitHub Copilot Chat Agent definition files** (`.github/agents/*.agent.md`) that turn GitHub Copilot into a coordinated team of specialized AI agents for PHP development.
@@ -81,6 +77,15 @@ graph TD
 
 ## Quick Start
 
+### Prerequisites
+
+- VS Code installed
+- [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) installed
+- In the Copilot Chat panel, select **Agent** mode in the chat mode picker
+- A PHP project with a writable `.github/` directory
+
+---
+
 ### 1. Copy agent files
 
 Copy the `.github/agents/` directory into your PHP project:
@@ -90,12 +95,21 @@ Copy the `.github/agents/` directory into your PHP project:
 cp -r path/to/php-agent-orchestrator/.github/agents .github/agents
 ```
 
+```powershell
+# From your project root
+Copy-Item -Path path\to\php-agent-orchestrator\.github\agents -Destination .github\agents -Recurse
+```
+
 ### 2. Customize for your project
 
 Copy the template and fill it in with your project's specifics:
 
 ```bash
 cp path/to/php-agent-orchestrator/.github/copilot-instructions.md .github/copilot-instructions.md
+```
+
+```powershell
+Copy-Item -Path path\to\php-agent-orchestrator\.github\copilot-instructions.md -Destination .github\copilot-instructions.md
 ```
 
 Edit `.github/copilot-instructions.md` — replace all `<!-- FILL IN: ... -->` markers with your actual values. See [`examples/`](examples/) for complete examples with Laravel, Symfony, and vanilla PHP.
@@ -178,13 +192,18 @@ The `.github/copilot-instructions.md` file is the single source of truth for you
 | **Security** | Auth, CSRF, XSS, SQL injection, ACL mechanisms |
 | **Database** | ORM, migrations, repository conventions |
 | **Testing** | Framework, directory, runner command |
+| **Environment Setup** | Local dev setup, dependencies, required services |
+| **Code Quality** | Static analysis (PHPStan, Psalm), code style (Pint, CS-Fixer) |
+| **API** | REST/GraphQL style, response format, rate limiting |
+| **Git Workflow** | Branch strategy, commit conventions, PR process |
+| **Key Modules** | Main business domains and their locations in codebase |
 
 ### Adjusting models
 
 Each agent file has a `model` field in the frontmatter. Defaults are sensible starting points, but adjust based on your preferences and budget:
 
 ```yaml
-model: claude-sonnet-4  # Change to your preferred model
+model: "Claude Opus 4.6"  # Example default from Orchestrator
 ```
 
 ### Adding MCP tools
@@ -192,7 +211,7 @@ model: claude-sonnet-4  # Change to your preferred model
 If you use MCP tool servers (e.g., Context7 for API docs, Docker tools), add them to the `tools` list in the agent frontmatter:
 
 ```yaml
-tools: [vscode, execute, read, agent, edit, search, web, todo, 'io.github.upstash/context7/*']
+tools: [vscode, execute, read, agent, search, web, todo, 'io.github.upstash/context7/*']
 ```
 
 ---
@@ -201,25 +220,42 @@ tools: [vscode, execute, read, agent, edit, search, web, todo, 'io.github.upstas
 
 | Agent | Default Model | Category | Why |
 |-------|---------------|----------|-----|
-| **Orchestrator** | `claude-sonnet-4` | Strong reasoning | Must understand complex requests and coordinate multiple agents |
-| **Planner** | `claude-sonnet-4` | Deep analysis | Needs to research codebases, verify docs, identify edge cases |
-| **Designer** | `claude-sonnet-4` | Creative + analytical | Balances aesthetics, usability, and technical constraints |
-| **Coder** | `claude-sonnet-4` | Strong coding | Complex implementations, multi-file changes, architecture |
-| **FastCoder** | `gpt-4.1-mini` | Fast + cheap | Simple tasks; speed matters more than deep reasoning |
-| **Reviewer** | `claude-sonnet-4` | Thorough analysis | Must systematically check security, architecture, logic |
-| **Tester** | `claude-sonnet-4` | Strong coding | Writes effective tests, understands edge cases |
+| **Orchestrator** | `Claude Opus 4.6` | Strong reasoning | Must understand complex requests and coordinate multiple agents |
+| **Planner** | `GPT-5.3-Codex` | Deep analysis | Needs to research codebases, verify docs, identify edge cases |
+| **Designer** | `Gemini 3 Pro (Preview)` | Creative + analytical | Balances aesthetics, usability, and technical constraints |
+| **Coder** | `GPT-5.3-Codex` | Strong coding | Complex implementations, multi-file changes, architecture |
+| **FastCoder** | `Claude Haiku 4.5` | Fast + cheap | Simple tasks; speed matters more than deep reasoning |
+| **Reviewer** | `Claude Opus 4.6` | Thorough analysis | Must systematically check security, architecture, logic |
+| **Tester** | `GPT-5.3-Codex` | Strong coding | Writes effective tests, understands edge cases |
+
+### Cost considerations
+
+These agents run on your **GitHub Copilot subscription**. The exact cost depends on your Copilot plan:
+
+- **Copilot Individual / Business / Enterprise** — agent mode usage counts toward your Copilot premium requests allowance. Each agent call is one or more premium requests depending on model and context size.
+- **Premium models** (Claude Opus 4.6, GPT-5.3-Codex) consume **more premium requests per call** than standard models.
+- **Budget-friendly models** (Claude Haiku 4.5, GPT-4.1-mini) consume fewer premium requests — ideal for FastCoder and routine tasks.
+
+**Cost optimization tips:**
+- Use cheap/fast models for FastCoder (e.g., `Claude Haiku 4.5`, `GPT-4.1-mini`).
+- Skip agents you don't need — the Orchestrator, Coder, and Reviewer trio is a solid minimal setup.
+- For simple tasks, invoke `@coder` or `@fastcoder` directly instead of going through the full orchestration pipeline.
+- Monitor your premium requests usage in GitHub Copilot settings.
+
+> **Note:** Agent definitions themselves are free — they are just Markdown files. You only pay through your existing Copilot subscription when you actually invoke agents.
 
 ---
 
 ## Examples
 
-Three complete example configurations are provided in [`examples/`](examples/):
+Four complete example configurations are provided in [`examples/`](examples/):
 
 | Example | Stack | Key features |
 |---------|-------|-------------|
 | [Laravel](examples/copilot-instructions-laravel.md) | Laravel 11, Eloquent, Blade, Tailwind, Pest | Sanctum auth, Spatie permissions, Sail, S3 storage |
 | [Symfony](examples/copilot-instructions-symfony.md) | Symfony 7, Doctrine, Twig, Bootstrap 5, PHPUnit | Hexagonal architecture, Symfony Security, Messenger |
 | [Vanilla MVC](examples/copilot-instructions-vanilla-mvc.md) | Custom MVC, Smarty 5, AdminLTE 3, custom repos | Front Controller, custom auth guards, CLI test scripts |
+| [API-Only](examples/copilot-instructions-api-only.md) | Laravel 11, Sanctum, PostgreSQL, REST API | Headless API, Scribe docs, Action classes, no frontend |
 
 ---
 
@@ -239,8 +275,10 @@ Three complete example configurations are provided in [`examples/`](examples/):
 examples/
 ├── copilot-instructions-laravel.md
 ├── copilot-instructions-symfony.md
-└── copilot-instructions-vanilla-mvc.md
+├── copilot-instructions-vanilla-mvc.md
+└── copilot-instructions-api-only.md
 .gitignore
+CHANGELOG.md
 CONTRIBUTING.md
 LICENSE                          # GPL v3
 README.md

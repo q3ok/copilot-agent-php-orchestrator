@@ -1,0 +1,40 @@
+name: Docs and Agents Validate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-docs-and-agents:
+    name: Validate docs and agent contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run repository validations
+        shell: pwsh
+        run: ./scripts/validate-agents.ps1
+
+  markdown-link-check:
+    name: Check markdown links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run lychee markdown link checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --verbose --accept 200,429 --max-retries 2 "**/*.md"
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
