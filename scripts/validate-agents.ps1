@@ -38,7 +38,7 @@ $readmePath = Join-Path $repoPath "README.md"
 
 $requiredFrontmatterKeys = @("name", "description", "tools", "model", "target")
 $allowedTools = @("vscode", "execute", "read", "agent", "edit", "search", "web", "todo")
-$nonImplementingAgents = @("orchestrator", "planner", "designer", "reviewer")
+$nonImplementingAgents = @("planner", "designer", "reviewer")
 $implementingAgents = @("coder", "fastcoder", "tester")
 $expectedAgents = @("orchestrator", "planner", "designer", "coder", "fastcoder", "reviewer", "tester")
 
@@ -71,7 +71,7 @@ foreach ($agentFile in $agentFiles) {
 
     $frontmatterMatch = [regex]::Match(
         $raw,
-        '(?s)^`{3,4}chatagent\s*\r?\n---\r?\n(.*?)\r?\n---'
+        '(?s)^(?:`{3,4}chatagent\s*\r?\n)?---\r?\n(.*?)\r?\n---'
     )
 
     if (-not $frontmatterMatch.Success) {
