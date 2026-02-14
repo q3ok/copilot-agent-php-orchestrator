@@ -81,7 +81,7 @@ graph TD
 
 - VS Code installed
 - [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) installed
-- In the Copilot Chat panel, select **Agent** mode in the chat mode picker
+- In the Copilot Chat panel, select **Agent** mode
 - A PHP project with a writable `.github/` directory
 
 ---
@@ -209,6 +209,8 @@ model: "Claude Opus 4.6"  # Example default from Orchestrator
 ### Adding MCP tools
 
 If you use MCP tool servers (e.g., Context7 for API docs, Docker tools), add them to the `tools` list in the agent frontmatter:
+Note: The Orchestrator requires all tools to be provided so it can supply them to subagents.
+Register or pass every tool instance to the Orchestrator before creating subagents; otherwise subagents will not have access to required tools.
 
 ```yaml
 tools: [vscode, execute, read, agent, search, web, todo, 'io.github.upstash/context7/*']
@@ -237,7 +239,7 @@ These agents run on your **GitHub Copilot subscription**. The exact cost depends
 - **Budget-friendly models** (Claude Haiku 4.5, GPT-4.1-mini) consume fewer premium requests — ideal for FastCoder and routine tasks.
 
 **Cost optimization tips:**
-- Use cheap/fast models for FastCoder (e.g., `Claude Haiku 4.5`, `GPT-4.1-mini`).
+- Use cheap/fast models for FastCoder (e.g., `Claude Haiku 4.5`, `GPT-5 mini`).
 - Skip agents you don't need — the Orchestrator, Coder, and Reviewer trio is a solid minimal setup.
 - For simple tasks, invoke `@coder` or `@fastcoder` directly instead of going through the full orchestration pipeline.
 - Monitor your premium requests usage in GitHub Copilot settings.
