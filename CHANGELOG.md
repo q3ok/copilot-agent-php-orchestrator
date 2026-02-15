@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- **AutoConfig agent** (`AutoConfig.agent.md`) — one-shot utility agent that scans the entire PHP project and auto-fills `.github/copilot-instructions.md`. Detects framework, architecture, naming conventions, database, security, testing, CI/CD, and more. Provides confidence levels (HIGH/MEDIUM/LOW) per section. Re-runnable: preserves manual customizations when the project evolves.
 - **Cost considerations** section in README — explains premium request usage and cost optimization tips.
 - **Complexity estimation** in Planner agent — outputs Low/Medium/High rating with time estimate to help Orchestrator decide between FastCoder and Coder.
 - **Dark mode / theming** requirement in Designer agent — ensures new UI works across all themes.

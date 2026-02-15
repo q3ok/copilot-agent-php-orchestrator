@@ -2,7 +2,7 @@
 name: planner
 description: Researches the codebase and external docs, identifies edge cases, and produces implementation plans (no code).
 tools: [vscode, execute, read, agent, search, web, todo]
-model: "GPT-5.3-Codex"
+model: "Claude Opus 4.6"
 target: vscode
 ---
 

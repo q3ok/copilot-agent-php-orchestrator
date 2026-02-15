@@ -11,7 +11,7 @@
 
 This repository provides a set of **GitHub Copilot Chat Agent definition files** (`.github/agents/*.agent.md`) that turn GitHub Copilot into a coordinated team of specialized AI agents for PHP development.
 
-Instead of a single general-purpose assistant, you get **7 agents** with distinct roles — an Orchestrator that delegates work, a Planner that strategizes, a Designer for UI decisions, a Coder and FastCoder for implementation, a Reviewer for quality gates, and a Tester for verification.
+Instead of a single general-purpose assistant, you get **7 core agents** with distinct roles — an Orchestrator that delegates work, a Planner that strategizes, a Designer for UI decisions, a Coder and FastCoder for implementation, a Reviewer for quality gates, and a Tester for verification. Plus an **AutoConfig** utility agent that scans your project and auto-fills the configuration template.
 
 The agents are **framework-agnostic** — they work with Laravel, Symfony, vanilla PHP, or any other PHP stack. You customize them for your project by filling in a single template file (`.github/copilot-instructions.md`).
 
@@ -23,6 +23,7 @@ The agents are **framework-agnostic** — they work with Laravel, Symfony, vanil
 - **Quality gates** — mandatory code review and testing steps before shipping
 - **Parallel execution** — independent tasks run concurrently for faster delivery
 - **Escalation patterns** — FastCoder escalates to Coder when tasks are too complex
+- **Zero-config start** — AutoConfig agent scans your project and fills in the configuration template automatically
 
 ---
 
@@ -77,6 +78,7 @@ graph TD
 | **FastCoder** | Executes simple, well-defined tasks quickly | ✅ | Speed — escalates if ambiguous |
 | **Reviewer** | Code review against security/architecture checklist | ❌ | Quality gate — finds problems |
 | **Tester** | Writes and runs verification tests | ✅ (tests only) | Validates implementations |
+| **AutoConfig** | Scans project and auto-fills `copilot-instructions.md` | ✅ (config only) | One-shot setup utility |
 
 ---
 
@@ -107,7 +109,7 @@ Copy-Item -Path path\to\php-agent-orchestrator\.github\agents -Destination .gith
 
 ### 2. Customize for your project
 
-Copy the template and fill it in with your project's specifics:
+Copy the template:
 
 ```bash
 cp path/to/php-agent-orchestrator/.github/copilot-instructions.md .github/copilot-instructions.md
@@ -116,6 +118,20 @@ cp path/to/php-agent-orchestrator/.github/copilot-instructions.md .github/copilo
 ```powershell
 Copy-Item -Path path\to\php-agent-orchestrator\.github\copilot-instructions.md -Destination .github\copilot-instructions.md
 ```
+
+#### Option A: Automatic configuration (recommended)
+
+Let the **AutoConfig** agent scan your project and fill in the template automatically:
+
+```
+@autoconfig Scan this project and fill in .github/copilot-instructions.md
+```
+
+AutoConfig will analyze your `composer.json`, directory structure, config files, and codebase to detect your tech stack, architecture, conventions, and more. It produces a confidence report so you know which sections to verify.
+
+> **Re-running**: If your project evolves (new framework version, added modules, changed architecture), simply invoke `@autoconfig` again. It will detect changes, update the configuration, and preserve your manual customizations.
+
+#### Option B: Manual configuration
 
 Edit `.github/copilot-instructions.md` — replace all `<!-- FILL IN: ... -->` markers with your actual values. See [`examples/`](examples/) for complete examples with Laravel, Symfony, and vanilla PHP.
 
@@ -181,6 +197,25 @@ Writes and runs verification tests for implemented changes. Covers security guar
 
 **When to use**: After implementation, to verify changes work correctly.
 
+### AutoConfig (utility)
+
+A **one-shot utility agent** that scans your entire PHP project and auto-fills the `.github/copilot-instructions.md` template. Detects framework, architecture, naming conventions, security mechanisms, database setup, testing tools, and more.
+
+**When to use**:
+- **Initial setup** — instead of manually filling in the template, let AutoConfig do it for you.
+- **Project evolution** — when your project changes (new framework version, added modules, changed architecture), re-run AutoConfig to update the configuration.
+
+**Key features**:
+- Analyzes `composer.json`, directory structure, config files, `.env`, Docker setup, CI configs, and actual source code.
+- Provides **confidence levels** (HIGH / MEDIUM / LOW) for each detected section.
+- Preserves manual customizations when re-run — only updates values that changed.
+- Removes inapplicable optional sections automatically.
+- Produces a detailed report of what was detected and what needs manual review.
+
+```
+@autoconfig Scan this project and fill in .github/copilot-instructions.md
+```
+
 ---
 
 ## Customization Guide
@@ -228,7 +263,7 @@ tools: [vscode, execute, read, agent, search, web, todo, 'io.github.upstash/cont
 | Agent | Default Model | Category | Why |
 |-------|---------------|----------|-----|
 | **Orchestrator** | `Claude Opus 4.6` | Strong reasoning | Must understand complex requests and coordinate multiple agents |
-| **Planner** | `GPT-5.3-Codex` | Deep analysis | Needs to research codebases, verify docs, identify edge cases |
+| **Planner** | `Claude Opus 4.6` | Deep analysis | Needs to research codebases, verify docs, identify edge cases |
 | **Designer** | `Gemini 3 Pro (Preview)` | Creative + analytical | Balances aesthetics, usability, and technical constraints |
 | **Coder** | `GPT-5.3-Codex` | Strong coding | Complex implementations, multi-file changes, architecture |
 | **FastCoder** | `Claude Haiku 4.5` | Fast + cheap | Simple tasks; speed matters more than deep reasoning |
@@ -273,6 +308,7 @@ Four complete example configurations are provided in [`examples/`](examples/):
 ```
 .github/
 ├── agents/
+│   ├── AutoConfig.agent.md      # One-shot project scanner & config generator
 │   ├── Orchestrator.agent.md    # Central coordinator
 │   ├── Planner.agent.md         # Strategy & planning
 │   ├── Designer.agent.md        # UX/UI decisions
@@ -324,6 +360,20 @@ Multi-tenancy is optional. If your project is multi-tenant, fill in the Multi-Te
 ### What if an agent makes a mistake?
 
 The Reviewer agent is your safety net. It performs a structured code review with a comprehensive checklist. The Orchestrator won't accept changes that the Reviewer flags as CRITICAL or MAJOR.
+
+### Do I have to fill in copilot-instructions.md manually?
+
+No! Use the **AutoConfig** agent to scan your project and fill it in automatically:
+
+```
+@autoconfig Scan this project and fill in .github/copilot-instructions.md
+```
+
+AutoConfig detects your framework, architecture, naming conventions, database setup, testing tools, security mechanisms, and more. It provides a confidence report so you know which sections need manual verification.
+
+### Can I re-run AutoConfig after my project changes?
+
+Yes — AutoConfig is designed to be re-runnable. It compares the current codebase against the existing configuration, updates changed values (with comments marking what was updated), and preserves your manual customizations. Simply invoke `@autoconfig` again whenever your project evolves.
 
 ---
 

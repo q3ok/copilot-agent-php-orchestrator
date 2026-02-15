@@ -39,8 +39,11 @@ $readmePath = Join-Path $repoPath "README.md"
 $requiredFrontmatterKeys = @("name", "description", "tools", "model", "target")
 $allowedTools = @("vscode", "execute", "read", "agent", "edit", "search", "web", "todo")
 $nonImplementingAgents = @("planner", "designer", "reviewer")
-$implementingAgents = @("coder", "fastcoder", "tester")
-$expectedAgents = @("orchestrator", "planner", "designer", "coder", "fastcoder", "reviewer", "tester")
+$implementingAgents = @("coder", "fastcoder", "tester", "autoconfig")
+$expectedAgents = @("orchestrator", "planner", "designer", "coder", "fastcoder", "reviewer", "tester", "autoconfig")
+
+# Utility agents excluded from README model table validation (they are documented separately)
+$utilityAgents = @("autoconfig")
 
 if (-not (Test-Path $agentDir)) {
     Add-Failure "Missing directory: .github/agents"
@@ -179,6 +182,11 @@ if (Test-Path $readmePath) {
     }
 
     foreach ($expectedAgent in $expectedAgents) {
+        # Utility agents (e.g., autoconfig) are documented separately, not in the model table
+        if ($utilityAgents -contains $expectedAgent) {
+            continue
+        }
+
         if (-not $readmeModels.ContainsKey($expectedAgent)) {
             Add-Failure "README model table is missing '$expectedAgent'."
             continue
