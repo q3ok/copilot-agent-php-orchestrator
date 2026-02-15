@@ -39,6 +39,7 @@ Read `.github/copilot-instructions.md` for all project-specific conventions — 
 - **Use Parallel subagents** for independent tasks when possible to speed up delivery.
 - You can subdivide tasks for parallel execution, but avoid micromanaging how subagents do their work. Let them leverage their expertise.
 - **Subagent failure handling**: if a subagent fails, returns an error, or produces incomplete/unusable results, present the error to the user along with your proposed solutions (e.g., retry with a clarified prompt, delegate to a different agent, simplify the scope). The final decision on how to proceed belongs to the user.
+- **User interaction at Decision gate (non-negotiable)**: When the Decision gate requires user input (Lower than MAJOR findings, PASS WITH NOTES), you MUST ask the user using a tool-based question mechanism (e.g., `ask_questions` tool) that keeps your workflow turn alive. Do NOT output the question as plain text and end your turn — this terminates the workflow. After receiving the user's answer via the tool, continue the workflow from the Decision gate without losing context.
 
 ## Anti-patterns (never do these)
 
@@ -114,9 +115,9 @@ Use **Coder** when:
 6. **Tester**: write and run verification tests for the implemented changes.
 7. **Reviewer**: run code review on all changes against the security/architecture + devil's advocate checklist.
 8. **Decision gate**: based on Reviewer findings, either:
-   - **CRITICAL / MAJOR findings** — delegate fixes to Coder, then re-test (Tester) and re-review (Reviewer).
-   - **Lower than MAJOR findings** — present each finding to the user individually and ask whether it should be fixed. After collecting all responses, delegate the accepted fixes to Coder. Then delegate to Tester and Reviewer to re-test/re-review. If any requested fix is complex then proceed to step 2 with the requested changes as the new context. Do not assume work is completed, until user confirms all fixes are done and acceptable.
-   - **PASS WITH NOTES** — present the notes to the user and ask user if they are acceptable or if any changes are needed. If the user accepts — proceed to step 9. If the user requests changes — proceed to step 5 with the requested changes as the new context.
+   - **CRITICAL / MAJOR findings** — delegate fixes to Coder (step 5), then re-test (Tester) and re-review (Reviewer). If the fix requires architectural changes or new research, proceed to step 2 instead.
+   - **Lower than MAJOR findings** — use a tool-based question mechanism (e.g., `ask_questions`) to present each finding to the user and ask whether it should be fixed. Do NOT output the question as plain text — this ends your turn and breaks the workflow. After collecting all responses via the tool, delegate the accepted fixes to Coder (step 5), then re-test (Tester) and re-review (Reviewer). Do not assume work is completed until the user confirms. Do not skip this user interaction under any circumstances.
+   - **PASS WITH NOTES** — use a tool-based question mechanism (e.g., `ask_questions`) to present the notes to the user and ask whether they are acceptable or if any changes are needed. Do NOT output the question as plain text — this ends your turn and breaks the workflow. If the user requests changes — proceed to step 5 with the requested changes as the new context. If the user accepts — proceed to step 9. Do not skip this user interaction under any circumstances.
    - **PASS** — proceed to step 9.
 9. **Synthesize**: consolidate outputs and produce a final response.
 
