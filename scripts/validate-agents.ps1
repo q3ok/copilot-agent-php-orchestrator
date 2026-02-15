@@ -38,9 +38,9 @@ $readmePath = Join-Path $repoPath "README.md"
 
 $requiredFrontmatterKeys = @("name", "description", "tools", "model", "target")
 $allowedTools = @("vscode", "execute", "read", "agent", "edit", "search", "web", "todo")
-$nonImplementingAgents = @("planner", "designer", "reviewer")
+$nonImplementingAgents = @("planner", "designer", "reviewer", "researcher")
 $implementingAgents = @("coder", "fastcoder", "tester", "autoconfig")
-$expectedAgents = @("orchestrator", "planner", "designer", "coder", "fastcoder", "reviewer", "tester", "autoconfig")
+$expectedAgents = @("orchestrator", "researcher", "planner", "designer", "coder", "fastcoder", "reviewer", "tester", "autoconfig")
 
 # Utility agents excluded from README model table validation (they are documented separately)
 $utilityAgents = @("autoconfig")

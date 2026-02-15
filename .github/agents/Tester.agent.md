@@ -2,7 +2,7 @@
 name: tester
 description: Writes and runs regression/verification tests for implemented changes. Creates test files following repo conventions. Never modifies production code.
 tools: [vscode, execute, read, agent, edit, search, web, todo]
-model: "GPT-5.3-Codex"
+model: "Gemini 3 Pro (Preview)"
 target: vscode
 ---
 

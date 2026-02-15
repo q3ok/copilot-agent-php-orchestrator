@@ -65,6 +65,19 @@ Perform a **thorough, structured code review** of all current changes (git diff)
 - [ ] **Defensive coding**: Guards at method entry. Fail-safe defaults.
 - [ ] **Consistency**: Style, patterns, and naming match surrounding code.
 
+### Devil's advocate (adversarial analysis)
+After completing the standard checklist above, switch to an **adversarial mindset**. Actively try to find ways the code could fail, be misused, or cause problems. This is not about compliance — it's about finding the holes that a checklist won't catch.
+
+- [ ] **What if this is called with unexpected input?** Trace every public method entry point — what happens with null, empty string, zero, negative numbers, extremely long strings, Unicode, special characters?
+- [ ] **What if this is called in the wrong order?** Are there implicit ordering dependencies between methods? Can the system reach an invalid state?
+- [ ] **What if this is called concurrently?** Race conditions, double submissions, stale reads, lost updates.
+- [ ] **What if the happy path fails halfway?** Is there cleanup? Partial state? Orphaned records? Dangling references?
+- [ ] **What if an external service is down?** Timeouts, retries, fallbacks. Does the error propagate cleanly or corrupt state?
+- [ ] **What assumptions are baked in?** Hardcoded limits, assumed data shapes, implicit dependencies on environment or config.
+- [ ] **What will break in 6 months?** Temporal coupling, magic numbers, undocumented behavior that future developers won't know about.
+- [ ] **Is the abstraction right?** Is this solving the right problem, or just the immediate symptom? Is the approach over-engineered or under-engineered for the actual use case?
+- [ ] **What would a malicious user do?** Beyond standard security checks — think about business logic abuse, rate limiting gaps, information disclosure through error messages or timing differences.
+
 ## Review process (mandatory workflow)
 
 1. **Gather changes**: Run `git diff --name-only` and `git diff` to identify all changed files and the nature of changes.
@@ -82,7 +95,7 @@ One paragraph: what was changed, overall assessment (PASS / PASS WITH NOTES / NE
 For each finding:
 ```
 [SEVERITY] File: path/to/file.php, Line(s): XX-YY
-Category: Security|Architecture|Logic|Quality
+Category: Security|Architecture|Logic|Quality|Devil's Advocate
 Description: What's wrong and why it matters.
 Suggestion: How to fix it (without writing the actual code).
 ```
@@ -104,4 +117,3 @@ Severity levels:
 - **Check the blast radius.** A one-line change can break 10 callers — verify them.
 - **Respect existing patterns.** If the codebase does X consistently, new code should too — even if you'd prefer Y.
 - **Security findings are never MINOR.** Anything security-related is at least MAJOR.
-

@@ -2,7 +2,7 @@
 name: fastcoder
 description: Executes simple, well-defined implementation tasks quickly with minimal overhead. Requires crystal-clear specs from Planner. For straightforward changes only (config updates, single-file edits, bug fixes under 5 minutes estimated work).
 tools: [vscode, execute, read, agent, edit, search, web, todo]
-model: Claude Haiku 4.5
+model: GPT-5 mini
 target: vscode
 ---
 

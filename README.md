@@ -1,6 +1,6 @@
 # PHP Agent Orchestrator for GitHub Copilot Chat
 
-**A multi-agent orchestration toolkit for PHP projects — 7 specialized AI agents that plan, design, code, review, and test your PHP application.**
+**A multi-agent orchestration toolkit for PHP projects — 8 specialized AI agents that research, plan, design, code, review, and test your PHP application.**
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![PHP](https://img.shields.io/badge/PHP-8.x-777BB4.svg)](https://www.php.net/)
@@ -11,15 +11,18 @@
 
 This repository provides a set of **GitHub Copilot Chat Agent definition files** (`.github/agents/*.agent.md`) that turn GitHub Copilot into a coordinated team of specialized AI agents for PHP development.
 
-Instead of a single general-purpose assistant, you get **7 core agents** with distinct roles — an Orchestrator that delegates work, a Planner that strategizes, a Designer for UI decisions, a Coder and FastCoder for implementation, a Reviewer for quality gates, and a Tester for verification. Plus an **AutoConfig** utility agent that scans your project and auto-fills the configuration template.
+Instead of a single general-purpose assistant, you get **8 core agents** with distinct roles — an Orchestrator that delegates work, a Researcher for deep analysis, a Planner that strategizes, a Designer for UI decisions, a Coder and FastCoder for implementation, a Reviewer for quality gates (with adversarial "devil's advocate" analysis), and a Tester for verification. Plus an **AutoConfig** utility agent that scans your project and auto-fills the configuration template.
 
 The agents are **framework-agnostic** — they work with Laravel, Symfony, vanilla PHP, or any other PHP stack. You customize them for your project by filling in a single template file (`.github/copilot-instructions.md`).
 
 ### Key features
 
 - **Multi-agent orchestration** — complex tasks are broken down and delegated to specialists
+- **Deep research capability** — Researcher agent analyzes codebases, evaluates libraries, and maps dependencies
 - **Security-first mindset** — every agent considers CSRF, XSS, SQL injection, ACL, and data isolation
+- **Devil's advocate review** — Reviewer includes adversarial analysis beyond standard compliance checks
 - **Framework-agnostic** — works with any PHP project via a customizable configuration template
+- **Model diversity** — different AI models for different roles to catch blind spots
 - **Quality gates** — mandatory code review and testing steps before shipping
 - **Parallel execution** — independent tasks run concurrently for faster delivery
 - **Escalation patterns** — FastCoder escalates to Coder when tasks are too complex
@@ -33,6 +36,7 @@ The agents are **framework-agnostic** — they work with Laravel, Symfony, vanil
 graph TD
     User([👤 User Request]) --> Orchestrator
 
+    Orchestrator --> Researcher
     Orchestrator --> Planner
     Orchestrator --> Designer
     Orchestrator --> Coder
@@ -40,6 +44,7 @@ graph TD
     Orchestrator --> Tester
     Orchestrator --> Reviewer
 
+    Researcher -->|findings| Orchestrator
     Planner -->|plan| Orchestrator
     Designer -->|design spec| Orchestrator
     Coder -->|implementation| Orchestrator
@@ -59,6 +64,7 @@ graph TD
     Orchestrator --> Response([📋 Final Response])
 
     style Orchestrator fill:#4A90D9,stroke:#333,color:#fff
+    style Researcher fill:#5C6BC0,stroke:#333,color:#fff
     style Planner fill:#7CB342,stroke:#333,color:#fff
     style Designer fill:#AB47BC,stroke:#333,color:#fff
     style Coder fill:#FF7043,stroke:#333,color:#fff
@@ -71,12 +77,13 @@ graph TD
 
 | Agent | Role | Writes Code? | Key Trait |
 |-------|------|:---:|-----------|
-| **Orchestrator** | Breaks down requests, delegates to specialists, coordinates results | ❌ | Never implements — only delegates |
-| **Planner** | Researches codebase, identifies edge cases, produces implementation plans | ❌ | Verifies docs, considers security |
+| **Orchestrator** | Breaks down requests, delegates to specialists, coordinates results | ❌ | Never implements or analyzes — only delegates |
+| **Researcher** | Deep codebase analysis, library evaluation, dependency mapping | ❌ | Evidence-based, thorough investigation |
+| **Planner** | Identifies edge cases, produces implementation plans | ❌ | Verifies docs, considers security |
 | **Designer** | Owns UX/UI decisions within the project's design system | ❌ | Usability + accessibility first |
 | **Coder** | Implements features, fixes bugs, writes tests | ✅ | Follows repo conventions strictly |
 | **FastCoder** | Executes simple, well-defined tasks quickly | ✅ | Speed — escalates if ambiguous |
-| **Reviewer** | Code review against security/architecture checklist | ❌ | Quality gate — finds problems |
+| **Reviewer** | Code review + devil's advocate adversarial analysis | ❌ | Quality gate — finds problems + challenges assumptions |
 | **Tester** | Writes and runs verification tests | ✅ (tests only) | Validates implementations |
 | **AutoConfig** | Scans project and auto-fills `copilot-instructions.md` | ✅ (config only) | One-shot setup utility |
 
@@ -146,6 +153,7 @@ Open your project in VS Code with GitHub Copilot Chat. The agents are automatica
 Or invoke specific agents directly:
 
 ```
+@researcher Analyze the current authentication system — what libraries, middleware, and patterns are used?
 @planner Plan the implementation of a notification system
 @coder Fix the pagination bug in the product listing
 @reviewer Review all current git changes
@@ -157,13 +165,19 @@ Or invoke specific agents directly:
 
 ### Orchestrator
 
-The central coordinator. Receives user requests, breaks them into tasks, and delegates to the right specialist. Never writes code. Ensures proper workflow: Plan → Design → Code → Test → Review.
+The central coordinator. Receives user requests, breaks them into tasks, and delegates to the right specialist. Never writes code or analyzes code directly. Ensures proper workflow: Research → Plan → Design → Code → Test → Review.
 
 **When to use**: Any complex request, multi-step tasks, or when you want the full orchestrated workflow.
 
+### Researcher
+
+Performs deep codebase analysis, external library evaluation, dependency mapping, and information gathering. Produces structured findings reports with evidence. Never writes code or plans.
+
+**When to use**: Before planning complex features. When you need to understand the current codebase, evaluate library alternatives, or map dependencies.
+
 ### Planner
 
-Researches the codebase and external documentation. Produces structured implementation plans with security considerations, edge cases, and ordered steps. Never writes code.
+Produces structured implementation plans with security considerations, edge cases, and ordered steps based on Researcher findings and/or user request. Never writes code.
 
 **When to use**: Before implementing complex features. When you need a strategy before coding.
 
@@ -187,7 +201,7 @@ A lightweight, fast implementation agent for simple, well-defined tasks. Require
 
 ### Reviewer
 
-Performs thorough code review against a comprehensive checklist covering security, architecture, logic, performance, and code quality. Never modifies code — only reports findings.
+Performs thorough code review against a comprehensive checklist covering security, architecture, logic, performance, and code quality. Includes an adversarial "devil's advocate" analysis that challenges assumptions and probes for edge cases beyond standard compliance. Never modifies code — only reports findings.
 
 **When to use**: After implementation, before merging. Quality gate.
 
@@ -263,12 +277,13 @@ tools: [vscode, execute, read, agent, search, web, todo, 'io.github.upstash/cont
 | Agent | Default Model | Category | Why |
 |-------|---------------|----------|-----|
 | **Orchestrator** | `Claude Opus 4.6` | Strong reasoning | Must understand complex requests and coordinate multiple agents |
-| **Planner** | `Claude Opus 4.6` | Deep analysis | Needs to research codebases, verify docs, identify edge cases |
+| **Researcher** | `Claude Opus 4.6` | Deep analysis | Needs to thoroughly analyze codebases, trace dependencies, evaluate libraries |
+| **Planner** | `Claude Opus 4.6` | Deep analysis | Needs to synthesize research findings into actionable plans |
 | **Designer** | `Gemini 3 Pro (Preview)` | Creative + analytical | Balances aesthetics, usability, and technical constraints |
 | **Coder** | `GPT-5.3-Codex` | Strong coding | Complex implementations, multi-file changes, architecture |
-| **FastCoder** | `Claude Haiku 4.5` | Fast + cheap | Simple tasks; speed matters more than deep reasoning |
-| **Reviewer** | `Claude Opus 4.6` | Thorough analysis | Must systematically check security, architecture, logic |
-| **Tester** | `GPT-5.3-Codex` | Strong coding | Writes effective tests, understands edge cases |
+| **FastCoder** | `GPT-5 mini` | Fast + free | Simple tasks; speed matters more than deep reasoning |
+| **Reviewer** | `Claude Opus 4.6` | Thorough analysis | Must systematically check security, architecture, logic + adversarial analysis |
+| **Tester** | `Gemini 3 Pro (Preview)` | Different perspective | Uses a different model than Coder to catch blind spots in test design |
 
 ### Cost considerations
 
@@ -276,10 +291,10 @@ These agents run on your **GitHub Copilot subscription**. The exact cost depends
 
 - **Copilot Individual / Business / Enterprise** — agent mode usage counts toward your Copilot premium requests allowance. Each agent call is one or more premium requests depending on model and context size.
 - **Premium models** (Claude Opus 4.6, GPT-5.3-Codex) consume **more premium requests per call** than standard models.
-- **Budget-friendly models** (Claude Haiku 4.5, GPT-4.1-mini) consume fewer premium requests — ideal for FastCoder and routine tasks.
+- **Free models** (GPT-5 mini) consume **zero premium requests** — ideal for FastCoder and routine tasks. Budget-friendly models (Claude Haiku 4.5, GPT-4.1-mini) also consume fewer premium requests.
 
 **Cost optimization tips:**
-- Use cheap/fast models for FastCoder (e.g., `Claude Haiku 4.5`, `GPT-5 mini`).
+- Use free/fast models for FastCoder (e.g., `GPT-5 mini`) — zero premium request cost.
 - Skip agents you don't need — the Orchestrator, Coder, and Reviewer trio is a solid minimal setup.
 - For simple tasks, invoke `@coder` or `@fastcoder` directly instead of going through the full orchestration pipeline.
 - Monitor your premium requests usage in GitHub Copilot settings.
@@ -310,11 +325,12 @@ Four complete example configurations are provided in [`examples/`](examples/):
 ├── agents/
 │   ├── AutoConfig.agent.md      # One-shot project scanner & config generator
 │   ├── Orchestrator.agent.md    # Central coordinator
+│   ├── Researcher.agent.md      # Deep analysis & information gathering
 │   ├── Planner.agent.md         # Strategy & planning
 │   ├── Designer.agent.md        # UX/UI decisions
 │   ├── Coder.agent.md           # Implementation
 │   ├── FastCoder.agent.md       # Quick tasks
-│   ├── Reviewer.agent.md        # Code review
+│   ├── Reviewer.agent.md        # Code review + devil's advocate
 │   └── Tester.agent.md          # Test writing & execution
 └── copilot-instructions.md      # Template — customize for your project
 examples/
@@ -333,7 +349,7 @@ README.md
 
 ## FAQ
 
-### Do I need all 7 agents?
+### Do I need all 8 agents?
 
 No. The Orchestrator, Coder, and Reviewer are the core trio. You can remove agents you don't need. However, the full set provides the most robust workflow.
 
