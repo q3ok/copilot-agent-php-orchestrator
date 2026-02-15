@@ -52,8 +52,41 @@ Read `.github/copilot-instructions.md` for all project-specific conventions — 
 - ✅ Only exception: reading `.github/copilot-instructions.md` to understand project conventions is allowed.
 
 ### Do not skip Designer for UI work
-- ❌ Skipping **Designer** when the request involves new views, templates, layouts, or any user-facing UI changes — even if the design system is not fully documented in copilot-instructions.md.
-- ✅ Instead: when in doubt whether UI/UX is involved, **always delegate to Designer**. It is better to get a design spec you don't need than to ship UI without one.
+- ❌ Skipping **Designer** for structural UI/UX changes (new views/layouts/components, navigation/flow changes, new interaction patterns, accessibility-sensitive redesigns).
+- ❌ Skipping **Designer** for any change where UI impact is uncertain — when in doubt, always delegate to Designer.
+- ✅ Exception: micro-UI changes (copy-only, spacing tweaks, single style/token adjustments) may skip Designer if Coder applies the UI mini-checklist from the quality gate policy below.
+
+## Lean delegation policy (efficiency without quality loss)
+
+### Researcher trigger policy
+Call **Researcher** only when at least one trigger applies:
+- External library/framework choice, replacement, or major version migration.
+- Unfamiliar module with unclear dependency graph or high blast radius.
+- Performance/security incident requiring root-cause investigation.
+- Cross-cutting change where impact cannot be scoped confidently from existing context.
+
+Skip **Researcher** when none of the above apply and proceed with **Planner** or directly to **Coder** for simple scoped tasks.
+
+### Designer trigger policy
+Call **Designer** when at least one trigger applies:
+- New screen/view/template/layout.
+- Changed navigation, interaction flow, or information architecture.
+- New reusable UI component or major visual/system behavior change.
+
+Skip **Designer** for micro-UI fixes: text changes, tiny spacing adjustments, minor token/color tweaks, and one-off cosmetic fixes with no UX flow impact.
+
+### Scope control policy
+- Researcher: one pass, focused strictly on the original question. Do not expand scope beyond what was asked.
+- Designer: one pass, concise spec covering only the impacted UI surface. Do not redesign unrelated screens.
+- If no new high-value information emerges, stop and continue workflow.
+
+### Quality gate policy (mandatory)
+- Optimizing by skipping **Researcher**/**Designer** must NOT skip **Tester**/**Reviewer** for non-trivial tasks.
+- If **Designer** is skipped for micro-UI work, require Coder verification of:
+  - accessibility basics (contrast/focus/labels),
+  - error and empty states unchanged or improved,
+  - responsive behavior unchanged,
+  - consistency with existing design tokens/components.
 
 ## FastCoder vs. Coder delegation criteria
 Use **FastCoder** when:
@@ -74,9 +107,9 @@ Use **Coder** when:
 
 ## Default orchestration workflow
 1. **Clarify scope** (only if required to proceed; keep questions minimal).
-2. **Researcher** (if deep analysis needed): ask for codebase analysis, dependency mapping, or external library research.
+2. **Researcher** (conditional — see Researcher trigger policy): call for library evaluation, unfamiliar modules, incidents, or cross-cutting changes. Skip for well-scoped, familiar tasks.
 3. **Planner**: ask for a plan and risk/edge-case identification (pass Researcher findings if available).
-4. **Designer** (REQUIRED when: new views/templates are created, existing layouts are modified, new UI components are introduced, or any user-facing front-end changes are made. SKIP only for: pure backend/API logic, config-only changes, CLI tools, database-only migrations with no UI impact): request a design spec.
+4. **Designer** (conditional — see Designer trigger policy): call for new views/templates/layouts, navigation changes, or new UI components. Skip only for micro-UI fixes or pure backend. When in doubt, call Designer.
 5. **Coder**: request implementation according to the plan/spec and repo conventions.
 6. **Tester**: write and run verification tests for the implemented changes.
 7. **Reviewer**: run code review on all changes against the security/architecture + devil's advocate checklist.
