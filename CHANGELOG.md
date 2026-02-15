@@ -18,5 +18,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **CI validation** for template and examples — verifies `copilot-instructions.md` template contains `<!-- FILL IN: -->` markers and examples do not.
 
 ### Changed
-- **Consistent fencing** — all agent files now use ```` (4 backticks) for the `chatagent` fence, regardless of whether they contain nested code blocks.
+- **Consistent frontmatter** — all agent files use standard YAML frontmatter (`---` delimited). Validation script supports both plain frontmatter and optional `chatagent` fencing.
 

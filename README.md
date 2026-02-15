@@ -49,6 +49,11 @@ graph TD
 
     Reviewer -->|NEEDS FIXES| Orchestrator
     Orchestrator -->|fix request| Coder
+    Orchestrator -.->|re-test| Tester
+    Orchestrator -.->|re-review| Reviewer
+
+    Orchestrator -.->|findings / questions| User
+    User -.->|accept / request fixes| Orchestrator
 
     Orchestrator --> Response([📋 Final Response])
 
@@ -243,6 +248,8 @@ These agents run on your **GitHub Copilot subscription**. The exact cost depends
 - Skip agents you don't need — the Orchestrator, Coder, and Reviewer trio is a solid minimal setup.
 - For simple tasks, invoke `@coder` or `@fastcoder` directly instead of going through the full orchestration pipeline.
 - Monitor your premium requests usage in GitHub Copilot settings.
+
+> **Quality vs. cost trade-off:** The Orchestrator's decision gate has **no limit on re-review cycles** by design. If the Reviewer keeps finding issues, the Orchestrator will keep delegating fixes and re-reviewing until all findings are resolved. This prioritizes **maximum code quality** over token/cost efficiency. If you prefer to cap iterations, you can modify the decision gate logic in `Orchestrator.agent.md` (e.g., add a maximum of 2–3 re-review rounds before reporting to the user for manual decision).
 
 > **Note:** Agent definitions themselves are free — they are just Markdown files. You only pay through your existing Copilot subscription when you actually invoke agents.
 
