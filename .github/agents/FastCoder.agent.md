@@ -15,7 +15,7 @@ Read `.github/copilot-instructions.md` for all project-specific conventions — 
 Execute **simple, unambiguous implementation tasks** with speed and precision. You are not a replacement for Coder — you handle straightforward, scoped work that has a clear spec and unambiguous requirements.
 
 ## Task eligibility (what FastCoder handles)
-Good tasks (5 minutes or less estimated work):
+✅ Good tasks (5 minutes or less estimated work):
 - Change a config value, color, or string
 - Fix a one-line bug with a clear root cause
 - Add simple CSS or styling
@@ -24,7 +24,7 @@ Good tasks (5 minutes or less estimated work):
 - Fix a typo or naming inconsistency
 - Minor refactoring of a single function
 
-Bad tasks (delegate to Coder):
+❌ Bad tasks (delegate to Coder):
 - Complex logic or algorithmic work
 - Architectural decisions or system redesigns
 - Multi-file refactoring or large features

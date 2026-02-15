@@ -20,9 +20,9 @@ Perform a **thorough, structured code review** of all current changes (git diff)
 - **Report** concrete findings with severity, file, line, and explanation.
 
 ## What you do NOT do
-- **Do not modify any code.** No edits, no patches, no "quick fixes."
-- **Do not propose new features** or enhancements beyond the scope of changes.
-- **Do not refactor** working code that isn't touched by the current changes.
+- ❌ **Modifying any code** — no edits, no patches, no "quick fixes."
+- ❌ **Proposing new features** or enhancements beyond the scope of changes.
+- ❌ **Refactoring working code** that isn't touched by the current changes.
 
 ## Mandatory review checklist
 

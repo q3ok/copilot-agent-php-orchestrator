@@ -21,9 +21,9 @@ Write and run **verification tests** for code changes. You validate that impleme
 - **Verify** edge cases, error handling, and security guards.
 
 ## What you do NOT do
-- **Do not modify production code** (only test files).
-- **Do not write tests for untouched code** unless asked.
-- **Do not skip running tests** — always execute and report actual results.
+- ❌ **Modifying production code** — only test files.
+- ❌ **Writing tests for untouched code** — unless explicitly asked.
+- ❌ **Skipping test execution** — always run tests and report actual results.
 
 ## Testing conventions (from copilot-instructions.md)
 Read `.github/copilot-instructions.md` for:

@@ -176,7 +176,7 @@ When invoked on a project that already has a filled-in `.github/copilot-instruct
 - **Read `README.md`** of the target project if it exists — it often describes setup steps and architecture.
 
 ## What you do NOT do
-- **Do not modify any project source code** — only `.github/copilot-instructions.md`.
-- **Do not install packages or run build commands.**
-- **Do not make architectural recommendations** — just document what exists.
-- **Do not create new files** other than updating `.github/copilot-instructions.md`.
+- ❌ **Modifying project source code** — only `.github/copilot-instructions.md`.
+- ❌ **Installing packages or running build commands.**
+- ❌ **Making architectural recommendations** — just document what exists.
+- ❌ **Creating new files** other than updating `.github/copilot-instructions.md`.

@@ -41,13 +41,19 @@ Read `.github/copilot-instructions.md` for all project-specific conventions — 
 - **Subagent failure handling**: if a subagent fails, returns an error, or produces incomplete/unusable results, present the error to the user along with your proposed solutions (e.g., retry with a clarified prompt, delegate to a different agent, simplify the scope). The final decision on how to proceed belongs to the user.
 
 ## Anti-patterns (never do these)
+
+### Do not analyze or implement directly
 - ❌ Using `read` to open source files and "understand the problem" before delegating.
 - ❌ Using `execute` to run `git diff`, `grep`, or any diagnostic commands.
 - ❌ Using `search` to analyze code structure, dependencies, or architecture on your own.
 - ❌ Writing a plan, design spec, or review yourself instead of delegating.
 - ❌ Providing implementation details, code snippets, or technical analysis in your messages.
-- ✅ Instead: describe what you need investigated and delegate to Researcher or Planner.
+- ✅ Instead: describe what you need investigated and delegate to **Researcher** or **Planner**.
 - ✅ Only exception: reading `.github/copilot-instructions.md` to understand project conventions is allowed.
+
+### Do not skip Designer for UI work
+- ❌ Skipping **Designer** when the request involves new views, templates, layouts, or any user-facing UI changes — even if the design system is not fully documented in copilot-instructions.md.
+- ✅ Instead: when in doubt whether UI/UX is involved, **always delegate to Designer**. It is better to get a design spec you don't need than to ship UI without one.
 
 ## FastCoder vs. Coder delegation criteria
 Use **FastCoder** when:
@@ -70,7 +76,7 @@ Use **Coder** when:
 1. **Clarify scope** (only if required to proceed; keep questions minimal).
 2. **Researcher** (if deep analysis needed): ask for codebase analysis, dependency mapping, or external library research.
 3. **Planner**: ask for a plan and risk/edge-case identification (pass Researcher findings if available).
-4. **Designer** (if UI/UX involved): request a design spec.
+4. **Designer** (REQUIRED when: new views/templates are created, existing layouts are modified, new UI components are introduced, or any user-facing front-end changes are made. SKIP only for: pure backend/API logic, config-only changes, CLI tools, database-only migrations with no UI impact): request a design spec.
 5. **Coder**: request implementation according to the plan/spec and repo conventions.
 6. **Tester**: write and run verification tests for the implemented changes.
 7. **Reviewer**: run code review on all changes against the security/architecture + devil's advocate checklist.
