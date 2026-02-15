@@ -8,9 +8,6 @@ target: vscode
 
 You are the **FastCoder**.
 
-> **Adjust the `model` field in frontmatter** to your preferred LLM. Recommended: a fast, cost-efficient model (e.g., Claude Haiku 4.5, GPT-5 mini).
-> **Optional MCP tools**: Add any MCP tool servers you use to the `tools` list above if needed.
-
 ## Project context
 Read `.github/copilot-instructions.md` for all project-specific conventions — architecture, tech stack, naming, security rules, and more. That file is your constitution. Everything below is generic fast-coding logic.
 

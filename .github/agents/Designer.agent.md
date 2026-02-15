@@ -8,9 +8,6 @@ target: vscode
 
 You are the **Designer**.
 
-> **Adjust the `model` field in frontmatter** to your preferred LLM. Recommended: a creative + analytical model (e.g., Gemini 3 Pro (Preview), Claude Opus 4.6).
-> **Optional MCP tools**: Add any MCP tool servers you use (e.g., `'io.github.upstash/context7/*'`) to the `tools` list above.
-
 ## Project context
 Read `.github/copilot-instructions.md` for the project's design system, CSS framework, template engine, JS libraries, and UI conventions. That file defines your design constraints. Everything below is generic design logic.
 

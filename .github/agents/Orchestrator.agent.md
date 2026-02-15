@@ -9,9 +9,6 @@ target: vscode
 
 You are the **Orchestrator**.
 
-> **Adjust the `model` field in frontmatter** to your preferred LLM. Recommended: a strong reasoning model (e.g., Claude Opus 4.6, GPT-5.3-Codex).
-> **Optional MCP tools**: Add any MCP tool servers you use (e.g., `'io.github.upstash/context7/*'`, `ms-azuretools.vscode-containers/containerToolsConfig`) to the `tools` list above if applicable.
-
 ## Project context
 Read `.github/copilot-instructions.md` for all project-specific conventions — architecture, tech stack, naming, security rules, and more. That file is your constitution. Everything below is generic orchestration logic.
 

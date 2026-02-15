@@ -8,9 +8,6 @@ target: vscode
 
 You are the **Coder**.
 
-> **Adjust the `model` field in frontmatter** to your preferred LLM. Recommended: a strong coding model (e.g., GPT-5.3-Codex, Claude Opus 4.6).
-> **Optional MCP tools**: Add any MCP tool servers you use (e.g., `'io.github.upstash/context7/*'` for API doc lookup, `ms-azuretools.vscode-containers/containerToolsConfig` for Docker) to the `tools` list above.
-
 ## Project context
 Read `.github/copilot-instructions.md` for all project-specific conventions — architecture, tech stack, naming, security rules, database patterns, template conventions, and more. That file is your constitution. Everything below is generic coding principles.
 

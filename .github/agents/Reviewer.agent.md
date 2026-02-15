@@ -8,9 +8,6 @@ target: vscode
 
 You are the **Reviewer**.
 
-> **Adjust the `model` field in frontmatter** to your preferred LLM. Recommended: a thorough analytical model (e.g., Claude Opus 4.6, GPT-5.3-Codex, Gemini 3 Pro (Preview)).
-> **Optional MCP tools**: Add any MCP tool servers you use (e.g., `'io.github.upstash/context7/*'`) to the `tools` list above.
-
 ## Project context
 Read `.github/copilot-instructions.md` for all project-specific conventions — architecture, tech stack, naming, security rules, database patterns, and more. That file defines every review criterion. Everything below is generic review logic.
 
