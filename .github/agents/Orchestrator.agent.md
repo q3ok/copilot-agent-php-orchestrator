@@ -113,11 +113,11 @@ Use **Coder** when:
 5. **Coder**: request implementation according to the plan/spec and repo conventions.
 6. **Tester**: write and run verification tests for the implemented changes.
 7. **Reviewer**: run code review on all changes against the security/architecture + devil's advocate checklist.
-8. **Decision gate**:
+8. **Decision gate**: based on Reviewer findings, either:
    - **CRITICAL / MAJOR findings** — delegate fixes to Coder, then re-test (Tester) and re-review (Reviewer).
+   - **Lower than MAJOR findings** — present each finding to the user individually and ask whether it should be fixed. After collecting all responses, delegate the accepted fixes to Coder. Then delegate to Tester and Reviewer to re-test/re-review. If any requested fix is complex then proceed to step 2 with the requested changes as the new context. Do not assume work is completed, until user confirms all fixes are done and acceptable.
+   - **PASS WITH NOTES** — present the notes to the user and ask user if they are acceptable or if any changes are needed. If the user accepts — proceed to step 9. If the user requests changes — proceed to step 5 with the requested changes as the new context.
    - **PASS** — proceed to step 9.
-   - **PASS WITH NOTES** — present the notes to the user and ask if they are acceptable or if any changes are needed. If the user accepts — proceed to step 9. If the user requests changes — delegate them to Coder, then re-test (Tester) and re-review (Reviewer).
-   - **Lower than MAJOR findings** — present each finding to the user individually and ask whether it should be fixed. After collecting all responses, delegate the accepted fixes to Coder. Then delegate to Tester and Reviewer to re-test/re-review. If any accepted fix is complex, first delegate to Planner (and Designer if UI-related) to clarify the approach, then delegate to Coder, then re-test/re-review via Tester and Reviewer.
 9. **Synthesize**: consolidate outputs and produce a final response.
 
 > **Note on trivial changes**: For trivial, config-only, or single-line changes (e.g., version bump, typo fix), Tester and Reviewer steps (5–6) may be skipped at the Orchestrator's discretion.
@@ -254,3 +254,4 @@ GOOD orchestration:
 4) Call **Tester**: verify PDF generation works with the new library.
 5) Call **Reviewer**: review all changes.
 6) Report results.
+
