@@ -46,3 +46,10 @@ Read `.github/copilot-instructions.md` and apply ALL constraints defined there. 
 - Report: what changed, where, how to validate.
 - Run tests when available using the project's test runner command (from copilot-instructions.md).
 - Always hand off to Orchestrator when implementation is complete or if you encounter blockers/uncertainties.
+
+## Designer spec handling
+When a Designer spec is provided in your prompt:
+- **Summary** is always included inline in your prompt — use it for a quick overview of design decisions.
+- **Full spec file path** may be provided (e.g., `.github/tmp/design-spec-<feature>.md`). If a file path is given, you **MUST read it** before implementing any UI-related code. The full spec file is the **authoritative source** — it overrides your own assumptions about layout, components, interactions, and accessibility.
+- Read the full spec section-by-section as you implement each part of the UI — do not try to memorize the entire file upfront.
+- If the Designer spec conflicts with existing code patterns, follow the Designer spec and flag the conflict in your report.

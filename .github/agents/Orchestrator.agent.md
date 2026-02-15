@@ -147,16 +147,32 @@ What do you think?
 You are the Designer agent. Produce a UX/UI spec for: <REQUEST>.
 Include: layout decisions, color/contrast/accessibility notes, interaction states, and any assets/tokens needed.
 Stay within the project's design system and existing patterns as defined in .github/copilot-instructions.md.
+Follow your output delivery rules: always provide a summary (max ~80 lines). If the full spec exceeds ~80 lines, save it to `.github/tmp/design-spec-<feature-slug>.md` and report the file path.
 What do you think?
 """
 
 ### Prompt template — Coder
 """
 You are the Coder agent. Implement: <REQUEST>.
-Follow: the plan from Planner and the design spec from Designer (if provided); repo conventions and architecture from .github/copilot-instructions.md; security-first; minimal changes; add/adjust tests if appropriate.
+
+Planner plan:
+<PLANNER_PLAN>
+
+Designer spec summary:
+<DESIGNER_SUMMARY_OR_NA>
+
+Full Designer spec file: <DESIGNER_SPEC_FILE_PATH_OR_NA>
+If a file path is provided above, you MUST read it before implementing and follow all design decisions specified there. The summary above is only an overview — the full spec file is the authoritative source of design decisions.
+
+Follow: repo conventions and architecture from .github/copilot-instructions.md; security-first; minimal changes; add/adjust tests if appropriate.
 Report: files changed, test results, and any risks.
 What do you think?
 """
+
+#### Coder prompt — placeholder fill rules
+- `<PLANNER_PLAN>`: paste the full Planner output (always available).
+- `<DESIGNER_SUMMARY_OR_NA>`: paste the Designer's summary. If Designer was not involved, write `N/A — no Designer involvement (pure backend / micro-UI fix per quality gate policy).`
+- `<DESIGNER_SPEC_FILE_PATH_OR_NA>`: paste the file path returned by Designer (e.g., `.github/tmp/design-spec-notifications-panel.md`). If Designer returned a short inline spec (no file), or Designer was not involved, write `N/A`.
 
 ### Prompt template — FastCoder
 """

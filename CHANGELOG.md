@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- **Designer output delivery rules** — Designer agent now has mandatory output delivery rules: always produces a summary (max ~60 lines) and saves long specs (>100 lines) to `.github/tmp/design-spec-<feature>.md`. This ensures reliable handoff to Coder regardless of spec size.
+- **Coder Designer spec handling** — Coder agent now has a dedicated section for Designer spec handling: reads full spec files section-by-section during implementation, treats the spec file as the authoritative source, and reports conflicts with existing code.
 - **Researcher agent** (`Researcher.agent.md`) — new specialized agent for deep codebase analysis, external library evaluation, dependency mapping, and information gathering. Produces structured findings reports with evidence. Fills the gap between user requests and Planner's plans by providing thorough investigation.
 - **Devil's advocate analysis** in Reviewer agent — new adversarial review section that challenges assumptions and probes for edge cases beyond standard compliance checks (race conditions, unexpected inputs, temporal coupling, abstraction fitness, business logic abuse).
 - **Anti-pattern rules** in Orchestrator agent — explicit prohibition against reading source code, running commands, or analyzing the codebase directly. All investigation must be delegated to Researcher or Planner.
@@ -26,6 +28,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Tester model changed** — switched from `GPT-5.3-Codex` to `Gemini 3 Pro (Preview)` for model diversity (Tester now uses a different model than Coder, reducing shared blind spots).
 - **Reviewer output format** — added `Devil's Advocate` as a finding category alongside Security, Architecture, Logic, and Quality.
 - **Quality gate policy in Orchestrator** — consolidated into Lean delegation policy section. Removed redundant rule from Critical rules to avoid duplication. Skipping Researcher/Designer for efficiency must not reduce verification standards (Tester/Reviewer remain default for non-trivial work).
+- **Orchestrator Coder prompt template** — replaced generic "follow plan from Planner and design spec from Designer (if provided)" with explicit placeholders: `<PLANNER_PLAN>`, `<DESIGNER_SUMMARY_OR_NA>`, `<DESIGNER_SPEC_FILE_PATH_OR_NA>`. Added placeholder fill rules so the Orchestrator deterministically passes (or omits) Designer output. This ensures Designer specs are never silently dropped.
+- **Orchestrator Designer prompt template** — added reminder about output delivery rules (summary + file path for long specs).
 
 ## [v0.1.0] - 2026-02-15
 

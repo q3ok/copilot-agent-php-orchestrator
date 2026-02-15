@@ -114,6 +114,13 @@ cp -r path/to/php-agent-orchestrator/.github/agents .github/agents
 Copy-Item -Path path\to\php-agent-orchestrator\.github\agents -Destination .github\agents -Recurse
 ```
 
+Add `.github/tmp/` to your project's `.gitignore` — the Designer agent uses this directory to store large design spec files during orchestration:
+
+```gitignore
+# Agent runtime artifacts
+.github/tmp/
+```
+
 ### 2. Customize for your project
 
 Copy the template:
