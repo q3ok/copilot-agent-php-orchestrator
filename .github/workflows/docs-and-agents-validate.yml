@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - platform-2d-game-test
   pull_request:
     branches:
       - main
+      - platform-2d-game-test
   workflow_dispatch:
 
 permissions:
