@@ -5,8 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
-
 ## [Unreleased]
+
+### Changed
+
+## [v0.2.0] - 2026-02-16
 
 ### Added
 - **Designer output delivery rules** — Designer agent now has mandatory output delivery rules: always produces a summary (max ~60 lines) and saves long specs (>100 lines) to `.github/tmp/design-spec-<feature>.md`. This ensures reliable handoff to Coder regardless of spec size.
@@ -47,6 +50,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Consistent frontmatter** — all agent files use standard YAML frontmatter (`---` delimited). Validation script supports both plain frontmatter and optional `chatagent` fencing.
 
 ## Links
-- [Unreleased]: https://github.com/q3ok/copilot-agent-php-orchestrator/compare/v0.1.0...HEAD
+- [Unreleased]: https://github.com/q3ok/copilot-agent-php-orchestrator/compare/v0.2.0...HEAD
 - [v0.1.0]: https://github.com/q3ok/copilot-agent-php-orchestrator/releases/tag/v0.1.0
+- [v0.2.0]: https://github.com/q3ok/copilot-agent-php-orchestrator/releases/tag/v0.2.0
 
