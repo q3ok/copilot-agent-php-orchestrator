@@ -47,13 +47,15 @@ When producing a design spec, include:
 ## Output delivery rules (mandatory)
 Your output will be passed to the **Coder** agent for implementation. Follow these rules to ensure reliable handoff:
 
-1. **Short specs (≤80 lines total)**: return the full spec inline as your response — no separate summary or file needed.
+1. **Short specs (≤80 lines total)**: return the full spec inline as your response — no separate file needed.
 
 2. **Long specs (>80 lines total)**: save the **full spec** to a file at `.github/tmp/design-spec-<feature-slug>.md` (create the directory if needed; use a short, descriptive kebab-case slug). Then return:
    - A **summary** (max ~80 lines) as your response text covering: key layout decisions, components used, interaction patterns, accessibility requirements, and any critical constraints. This summary will be embedded directly in the Coder's prompt.
    - A clearly labeled line: `Full spec file: .github/tmp/design-spec-<feature-slug>.md`
    - Confirm the file was saved successfully.
 
-4. **Feature slug**: derive from the request (e.g., `notifications-panel`, `dark-mode`, `user-profile-redesign`).
+3. **Feature slug**: derive from the request (e.g., `notifications-panel`, `dark-mode`, `user-profile-redesign`).
 
-5. **File format**: the saved spec file must be self-contained Markdown with clear section headers so the Coder can read it section-by-section during implementation.
+4. **File format**: the saved spec file must be self-contained Markdown with clear section headers so the Coder can read it section-by-section during implementation.
+
+5. **File-editing restriction**: you may **only** create or edit files under `.github/tmp/`. Do not modify any other files in the project.

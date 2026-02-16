@@ -38,8 +38,11 @@ $readmePath = Join-Path $repoPath "README.md"
 
 $requiredFrontmatterKeys = @("name", "description", "tools", "model", "target")
 $allowedTools = @("vscode", "execute", "read", "agent", "edit", "search", "web", "todo")
-$nonImplementingAgents = @("planner", "designer", "reviewer", "researcher")
+$nonImplementingAgents = @("planner", "reviewer", "researcher")
 $implementingAgents = @("coder", "fastcoder", "tester", "autoconfig")
+
+# Designer needs 'edit' to save design spec files to .github/tmp/ but is not a general implementing agent
+$editExceptionAgents = @("designer")
 $expectedAgents = @("orchestrator", "researcher", "planner", "designer", "coder", "fastcoder", "reviewer", "tester", "autoconfig")
 
 # Utility agents excluded from README model table validation (they are documented separately)
@@ -151,6 +154,10 @@ foreach ($agentFile in $agentFiles) {
 
     if (($implementingAgents -contains $agentName) -and (-not ($tools -contains "edit"))) {
         Add-Failure "Implementing agent '$agentName' must include 'edit' in tools ($relativePath)."
+    }
+
+    if (($editExceptionAgents -contains $agentName) -and (-not ($tools -contains "edit"))) {
+        Add-Failure "Agent '$agentName' requires 'edit' in tools for spec file saving ($relativePath)."
     }
 }
 
