@@ -89,6 +89,16 @@ graph TD
 
 ---
 
+## Demo: See It in Action
+
+> **"Pixel Dash: The Lost Coins"** — a retro-style 2D side-scrolling platformer built entirely in vanilla HTML, CSS, and JavaScript. No frameworks, no build tools, no external dependencies.
+>
+> Created with a **single prompt** using the orchestrator agent system to showcase what the multi-agent workflow can produce end-to-end.
+
+🎮 **[Play the live demo](https://q3ok.github.io/copilot-agent-php-orchestrator/demo-platform-2d-game/)** · 📂 [Game repo branch](https://github.com/q3ok/copilot-agent-php-orchestrator/tree/platform-2d-game-test) · 📝 [Prompt used to create it](https://github.com/q3ok/copilot-agent-php-orchestrator/blob/platform-2d-game-test/PROMPT.md)
+
+---
+
 ## Quick Start
 
 ### Prerequisites
