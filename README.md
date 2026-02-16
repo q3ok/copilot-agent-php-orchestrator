@@ -91,6 +91,12 @@ graph TD
 
 ## Demo: See It in Action
 
+> **"NEONRIFT: SHADOW PROTOCOL"** — a fully playable 2D cyberpunk platformer inspired by Prince of Persia, built entirely with vanilla JavaScript and Canvas 2D. Features 12 campaign levels across 3 acts, 2 boss fights, 5 enemy types, combat system with light/heavy attacks, block/parry, dodge with i-frames, stamina management, achievement system (21 achievements), speedrun mode, leaderboard, save system, 6 in-engine cutscenes, procedural audio via Web Audio API, and 100% procedural graphics — **zero external dependencies**.
+>
+> Created with a **single prompt** using the orchestrator agent system.
+
+🎮 **[Play the live demo](https://q3ok.github.io/neonrift-shadow-protocol/)** · 📂 [Game repository](https://github.com/q3ok/neonrift-shadow-protocol)
+
 > **"Pixel Dash: The Lost Coins"** — a retro-style 2D side-scrolling platformer built entirely in vanilla HTML, CSS, and JavaScript. No frameworks, no build tools, no external dependencies.
 >
 > Created with a **single prompt** using the orchestrator agent system to showcase what the multi-agent workflow can produce end-to-end.
