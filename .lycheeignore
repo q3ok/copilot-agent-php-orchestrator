@@ -1,0 +1,2 @@
+# Exclude GitHub Pages domain — the URL will 404 until the first deployment completes
+https://q3ok.github.io/copilot-agent-php-orchestrator/

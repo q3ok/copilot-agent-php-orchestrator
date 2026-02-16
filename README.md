@@ -4,6 +4,12 @@ A retro-style 2D side-scrolling platformer game built entirely in vanilla HTML, 
 
 ---
 
+## 🚀 Demo
+
+**[▶ Play the Live Demo](https://q3ok.github.io/copilot-agent-php-orchestrator/demo-platform-2d-game/)**  — hosted on GitHub Pages, no install needed.
+
+---
+
 ## How to Run
 
 1. Clone or download this repository

@@ -1,0 +1,48 @@
+# Deploy game demo to GitHub Pages
+# Publishes index.html, style.css, and game.js under /demo-platform-2d-game/
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  pages: write
+  id-token: write
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare staging directory
+        run: |
+          mkdir -p staging/demo-platform-2d-game
+          cp index.html style.css game.js staging/demo-platform-2d-game/
+          touch staging/.nojekyll
+          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=demo-platform-2d-game/"></head><body></body></html>' > staging/index.html
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: staging
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

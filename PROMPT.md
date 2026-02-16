@@ -52,3 +52,35 @@ Do the research and planning internally, then ship working code.
 ```
 @autoconfig Scan this project and fill in .github/copilot-instructions.md
 ```
+
+## Prompt 3
+```
+Goal:
+Publish a working DEMO of this repository to GitHub Pages automatically, and add a visible DEMO link to README.md.
+
+Key requirement (most important):
+Update README.md by adding a section near the top:
+
+## 🚀 Demo
+Live demo: <URL>
+
+The URL should be the GitHub Pages URL in the form:
+https://q3ok.github.io/copilot-agent-php-orchestrator/demo-platform-2d-game/
+
+You must decide what and how to deploy:
+1) Inspect the repository structure and determine whether this can be served as a static site on GitHub Pages.
+2) Decide the publishing source:
+   - Prefer publishing a built static output if the repo contains a frontend build (dist/, build/, docs/, site/, public/ etc.).
+   - If it already contains static HTML/CSS/JS, publish the correct folder.
+   - If it is not directly runnable as static, create a minimal static demo page (index.html) that explains what the project is and how to run it locally, and publish that page as the DEMO.
+3) Decide whether to use Jekyll or disable it:
+   - If filenames/folders could be broken by Jekyll processing (e.g., directories starting with "_", or you want raw static hosting), add a ".nojekyll" file.
+   - Otherwise, you may keep default behavior.
+
+Implementation requirements:
+- Add a GitHub Actions workflow that deploys to GitHub Pages on push to the default branch (main/master) and supports workflow_dispatch.
+- Use the official GitHub Pages actions (configure-pages, upload-pages-artifact, deploy-pages).
+- Set correct permissions (pages: write, id-token: write, contents: read).
+- The workflow must publish ONLY the chosen demo output directory.
+- Keep changes minimal and repository-appropriate.
+```
